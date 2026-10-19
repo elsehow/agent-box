@@ -35,7 +35,8 @@ class UrlGuardTest(unittest.TestCase):
     def test_read_page_blocked_without_calling_tavily(self):
         with self.env(PATTERNS), patch("urllib.request.urlopen") as net:
             for url in (PAPER, "https://forecastingresearch.org/research/airo",
-                        "https://airo.forecastingresearch.org/"):
+                        "https://airo.forecastingresearch.org/",
+                        "https://Airo.ForecastingResearch.org/", PAPER.replace("airo", "AIRO")):
                 self.assertEqual(tools.read_page(url), {
                     "url": url, "text": "", "error": "page read failed: page unavailable"})
         net.assert_not_called()
